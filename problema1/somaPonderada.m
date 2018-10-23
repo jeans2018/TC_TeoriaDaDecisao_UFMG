@@ -11,7 +11,7 @@ for i=1:nr_s
     w = w/sum(w);
     
     [s(i,:), ~] = VNS( s_0, 3, 0.1, 5, @(solution) problemaPw( solution, w ) );
-    f(i,:) = (fobjMulti(s(i,:)))';
+    f(i,:) = (fobjMulti(s(i,:)))';% avalia a solução i para Fc e Fq
     s_0 =  s(i,:);
 end
 
