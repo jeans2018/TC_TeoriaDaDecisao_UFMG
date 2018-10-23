@@ -10,6 +10,5 @@ while(k <= k_max)
 end
 
 best_solution = solution;
-
 end
 

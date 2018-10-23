@@ -3,8 +3,8 @@ initial_solution = initialize();
 k_max = 3;
 erro = 0.1;
 MAX_ITER = 10;
-fobj = @fobjFC;
-%fobj = @fobjFQ;
+%fobj = @fobjFC;
+fobj = @fobjFQ;
 
 qtd_testes = 5;
 
