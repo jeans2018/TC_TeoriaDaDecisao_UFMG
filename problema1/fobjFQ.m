@@ -22,9 +22,9 @@ end
 
 %------------------------acha o valor de penalização-----------------------
 
-u = sum(a,2);   %fator de penalidade
+u = 1000;   %fator de penalidade
 
-P = sum(u.*max(0,g));   %valor de penalização
+P = u*sum(max(0,g).^2);   %valor de penalização
 
 %-----------------------------acha o valor de fq---------------------------
 

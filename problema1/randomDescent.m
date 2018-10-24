@@ -2,7 +2,7 @@ function [ best_solution ] = randomDescent( initial_solution, k, fobj )
 %	randomDescent: Retorna a melhor solução na vizinhança "k" a partir de
 %	"initial_solution", depois de "ITER_MAX" iterações sem melhora.
 
-ITER_MAX = 5;
+ITER_MAX = 3;
 
 iter = 0;
 
