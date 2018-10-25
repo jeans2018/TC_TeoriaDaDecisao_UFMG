@@ -1,8 +1,8 @@
-function [ fitness ] = problemaPe( solution, e, idx_f )
+function [ fitness ] = problemaPe( solution, e, idx_f, f_lim )
 %	problemaPe: retorna a avaliação de solution na função de índice "idx_f"
 %	restrita pelas demais funções objetivo.
 
-f = feval(@fobjMulti,solution);
+f = feval(@fobjMulti,solution, f_lim);
 
 idx_h = 1:length(f);
 idx_h(idx_f) = []; %indice da função que será transformada em restrição
