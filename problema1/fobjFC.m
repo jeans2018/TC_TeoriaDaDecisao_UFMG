@@ -12,11 +12,11 @@ load('data_10x50.mat')
 
 %-----------avalia as restrições de desigualdade para a solução------------
 
-g = zeros(m,1);
+g = zeros(m,1);%restrição de desigualdade
 
 for i=1:m
-    tarefa = find(solution == i);
-    g(i) = sum(a(i,tarefa)) - b(i);
+    tarefa = find(solution == i); %acha as tarefas realizadas pelo agente i
+    g(i) = sum(a(i,tarefa)) - b(i); %calcula a restrição de capacidade para o agente i
 end
 
 %------------------------acha o valor de penalização-----------------------
@@ -30,13 +30,13 @@ P = u*sum(max(0,g).^2);   %valor de penalização
 fc = 0; %custo
 
 for i=1:m
-    tarefa = find(solution == i);
-    fc = fc + sum(c(i,tarefa));
+    tarefa = find(solution == i);%acha as tarefas realizadas pelo agente i
+    fc = fc + sum(c(i,tarefa)); %soma os custos das tarefas realizadas pelo agente i
 end
 
 %------------------------retorna o valor de avaliação----------------------
 
-f = fc + P;
+f = fc + P; %função objetivo + restrições penalizadas
 
 end
 
