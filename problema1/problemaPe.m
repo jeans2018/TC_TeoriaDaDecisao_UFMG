@@ -9,7 +9,8 @@ idx_h(idx_f) = []; %indice da função que será transformada em restrição
 
 u=1000; %fator de penalidade
 
-fitness = f(idx_f) + u*sum(max(0,f(idx_h)-e(idx_h)).^2);
+%fitness = f(idx_f) + u*sum(max(0,f(idx_h)-e(idx_h)).^2);
+fitness = f(idx_f) + u*sum(max(0,f(idx_h)-e).^2);
 
 end
 

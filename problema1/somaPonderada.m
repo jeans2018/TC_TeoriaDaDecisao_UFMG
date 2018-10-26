@@ -8,7 +8,7 @@ eps=[zeros(nr_f,1) ones(nr_f,1)];%limites para obter valores não normalizados
 I=eye(nr_f);
 for j=1:nr_f
     w = I(j,:); %resolve um problema mono-objetivo a cada iteração
-    [s(j,:), ~] = VNS( s_0, 3, 0.1, 5, @(solution) problemaPw( solution, w, eps ) ); %solução mono-objetivo
+    [s(j,:), ~] = VNS( s_0, 2, 0.1, 5, @(solution) problemaPw( solution, w, eps ) ); %solução mono-objetivo
     f(j,:) = (fobjMulti(s(j,:), eps))';%linha j: avaliação de Fc(coluna1) e Fq(coluna2) para solução j
     j
 end
@@ -24,7 +24,7 @@ for i=1:nr_s
     w = w/sum(w);
     
     %[s(i,:), ~] = VNS( s_0, 3, 0.1, 5, @(solution) problemaPw( solution, peso(:,i)', f_lim ) );
-    [s(i,:), ~] = VNS( s_0, 3, 0.1, 5, @(solution) problemaPw( solution, w, f_lim ) );
+    [s(i,:), ~] = VNS( s_0, 2, 0.1, 5, @(solution) problemaPw( solution, w, f_lim ) );
     f(i,:) = (fobjMulti(s(i,:), eps))';% avalia a solução i para Fc e Fq(valores não normalizados)
     f_lim = [min(f)' max(f)']; %atualiza máximos e mínimos
     %s_0 =  s(i,:);
