@@ -1,3 +1,7 @@
+clear all
+close all
+clc
+
 %Inicializações
 nr_s = 50; %quantidade de soluções
 nr_f = 2; %quantidade de funções objetivo
@@ -6,12 +10,12 @@ s = zeros(nr_s, 50);
 s_0 = initialize;
 %%
 % Determina a solução utópica (aproximada) usando Pw
-eps=[zeros(nr_f,1) ones(nr_f,1)];%limites para obter valores não normalizados
+lim=[zeros(nr_f,1) ones(nr_f,1)];%limites para obter valores não normalizados
 I=eye(nr_f); %indices para resolver problemas mono-objetivos com a função problemaPw
 for j=1:nr_f
     w = I(j,:); %resolve um problema mono-objetivo a cada iteração
-    [s(j,:), ~] = VNS( s_0, 2, 0.1, 5, @(solution) problemaPw( solution, w, eps ) ); %solução mono-objetivo
-    f(j,:) = (fobjMulti(s(j,:), eps))';%linha j: avaliação de Fc(coluna1) e Fq(coluna2) para solução j
+    [s(j,:), ~] = VNS( s_0, 3, 0.1, 5, @(solution) problemaPw( solution, w, lim ) ); %solução mono-objetivo
+    f(j,:) = (fobjMulti(s(j,:), lim))';%linha j: avaliação de Fc(coluna1) e Fq(coluna2) para solução j
     j
 end
 
@@ -22,8 +26,8 @@ f_lim = [min(f)' max(f)'];%linha 1: valor mínimo e máximo de Fc
 for i=1:(nr_s/2)       %usa Fc como objetivo e Fq como restrição
    e = rand;
    
-   [s(i,:), ~] = VNS( s_0, 2, 0.1, 5, @(solution) problemaPe( solution, e, 1, f_lim ) );
-   f(i,:) = (fobjMulti(s(i,:), eps))';
+   [s(i,:), ~] = VNS( s_0, 3, 0.1, 5, @(solution) problemaPe( solution, e, 1, f_lim ) );
+   f(i,:) = (fobjMulti(s(i,:), lim))';
    f_lim = [min(f)' max(f)'];
    i
 end
@@ -31,22 +35,17 @@ end
 for k=(nr_s/2)+1:nr_s   %usa Fq como objetivo e Fc como restrição
    e=rand;
    
-   [s(k,:), ~] = VNS( s_0, 2, 0.1, 5, @(solution) problemaPe( solution, e, 2, f_lim ) );
-   f(k,:) = (fobjMulti(s(k,:), eps))';
+   [s(k,:), ~] = VNS( s_0, 3, 0.1, 5, @(solution) problemaPe( solution, e, 2, f_lim ) );
+   f(k,:) = (fobjMulti(s(k,:), lim))';
    f_lim = [min(f)' max(f)'];
    k
 end
-%%
-%Normaliza soluções e avalia dominãncia
-f_norm = zeros(size(f));
-for t=1:nr_f
-    f_norm(:,t)=(f(:,t) - f_lim(t,1))/(f_lim(t,2) - f_lim(t,1));
-    t
-end
 
-[s,f_norm,f] = nondominatedpoints(s',f_norm',f');
+%%
+%Avalia dominãncia
+
+[s,f] = nondominatedpoints(s',f');
 s = s';
-f_norm = f_norm';
 f = f';
 %%
 %Plota resultados
@@ -55,12 +54,6 @@ plot(f(:,1),f(:,2), 'b*')
 title('Fronteira Pareto Ótima')
 xlabel('Fc')
 ylabel('Fq')
-
-%{
-figure(2)
-plot(f_norm(:,1),f_norm(:,2), 'ro')
-xlabel('Fc')
-ylabel('Fq')
-%}
+grid on
 
 solucoes_nao_dominadas = size(s,1)

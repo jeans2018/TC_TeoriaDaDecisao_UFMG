@@ -1,3 +1,7 @@
+clear all
+close all
+clc
+
 initial_solution = initialize();
 %initial_solution = randomInitialize();
 k_max = 3;
