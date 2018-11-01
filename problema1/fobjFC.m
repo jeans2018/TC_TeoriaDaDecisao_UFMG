@@ -10,31 +10,17 @@ load('data_10x50.mat')
 %j ao agente i;
 %   b: vetor onde a posição b(i) contém a capacidade total do agente i.
 
-%-----------avalia as restrições de desigualdade para a solução------------
-
 g = zeros(m,1);%restrição de desigualdade
+fc = 0; %custo
 
 for i=1:m
     tarefa = find(solution == i); %acha as tarefas realizadas pelo agente i
     g(i) = sum(a(i,tarefa)) - b(i); %calcula a restrição de capacidade para o agente i
-end
-
-%------------------------acha o valor de penalização-----------------------
-
-u = 1000;   %fator de penalidade
-
-P = u*sum(max(0,g).^2);   %valor de penalização
-
-%-----------------------acha o valor da função custo-----------------------
-
-fc = 0; %custo
-
-for i=1:m
-    tarefa = find(solution == i);%acha as tarefas realizadas pelo agente i
     fc = fc + sum(c(i,tarefa)); %soma os custos das tarefas realizadas pelo agente i
 end
 
-%------------------------retorna o valor de avaliação----------------------
+u = 1000;   %fator de penalidade
+P = u*sum(max(0,g).^2);   %valor de penalização
 
 f = fc + P; %função objetivo + restrições penalizadas
 
