@@ -12,6 +12,9 @@ elseif(k == 2) %troca as tarefas entre dois agentes
     indice = randi(m, 1, 2);
     new_solution(indice) = new_solution(flip(indice));
     %new_solution([indice(1) indice(2)]) = new_solution([indice(2) indice(1)]);
+elseif(k == 3) %troca as tarefas entre tres agentes
+    indice = randi(m, 1, 3);
+    new_solution(indice) = new_solution(circshift(indice,[1,1]));
 end
 
 end
