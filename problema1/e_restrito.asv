@@ -27,6 +27,7 @@ f_lim = [min(f)' max(f)'];%linha 1: valor mínimo e máximo de Fc
                           %linha 2: valor mínimo e máximo de Fq
 %%
 %Minimiza o problema multi-objetivo
+e = linspace(0.1,0.9,50);
 s_1 = s_0;
 for i=1:(nr_s/2)       %usa Fc como objetivo e Fq como restrição
    e = rand;
